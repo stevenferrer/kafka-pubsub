@@ -13,7 +13,7 @@ import (
 	"github.com/go-kit/kit/endpoint"
 	kitlog "github.com/go-kit/kit/log"
 
-	um "seeka.org/usermanagementsvc"
+	um "github.com/steven-ferrer/kafka-pubsub"
 )
 
 func main() {
@@ -47,7 +47,7 @@ func main() {
 		}
 
 		pubbers := um.Publishers{CreateUserPublisher: pubber}
-		service = um.NewService(nil, pubbers)
+		service = um.NewService(pubbers)
 		service = um.ServiceLoggingMiddleware(logger)(service)
 	}
 

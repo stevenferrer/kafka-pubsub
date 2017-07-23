@@ -2,7 +2,6 @@ package usermanagementsvc
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 
 	"github.com/basvanbeek/pubsub"
@@ -29,7 +28,7 @@ type service struct {
 
 //CreateUser invokes CreateUserPublisher to publish to UserCreate topic on kafka
 func (s service) CreateUser(ctx context.Context, email, password string) error {
-	msg := fmt.Sprintf("Creating user %s: password:%s", user, password)
+	msg := fmt.Sprintf("Creating user %s: password:%s", email, password)
 
 	return s.pubbers.CreateUserPublisher.PublishRaw("", []byte(msg))
 }

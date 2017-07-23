@@ -2,7 +2,6 @@ package usermanagementsvc
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/go-kit/kit/log"

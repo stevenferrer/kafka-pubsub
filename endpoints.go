@@ -2,7 +2,6 @@ package usermanagementsvc
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/go-kit/kit/endpoint"
 )
