@@ -36,11 +36,10 @@ func main() {
 	//Business domain
 	var service um.Service
 	{
-		broker := broker
 		topic := "UserCreate"
 
 		pubber, err := kafka.NewKafkaPublisher(
-			broker,
+			*broker,
 			topic,
 		)
 		if err != nil {
@@ -55,11 +54,10 @@ func main() {
 	//subscribers
 	var subbers um.Subscribers
 	{
-		broker := "localhost:9092"
 		topic := "UserCreate"
 
 		createUserSubber, err := kafka.NewSubscriber(
-			broker,
+			*broker,
 			topic,
 			kafka.OffsetOldest(),
 		)
