@@ -28,8 +28,10 @@ type service struct {
 
 //CreateUser invokes CreateUserPublisher to publish to UserCreate topic on kafka
 func (s service) CreateUser(ctx context.Context, email, password string) error {
-	msg := fmt.Sprintf("Creating user %s: password:%s", email, password)
+	//create the user
+	msg := fmt.Sprintf("User Created %s: password:%s", email, password)
 
+	//send a message to UserCreated topic
 	return s.pubbers.CreateUserPublisher.PublishRaw("", []byte(msg))
 }
 
@@ -47,10 +49,10 @@ type Subscribers struct {
 func (s Subscribers) Start() chan error {
 	errc := make(chan error)
 
+	//Listen to UserCreated topic
 	go func(subber pubsub.Subscriber) {
 		sm := subber.Start()
 		for m := range sm {
-			//do create user logic
 			fmt.Println(string(m.Message()))
 			if err := m.Done(); err != nil {
 				errc <- err

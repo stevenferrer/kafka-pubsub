@@ -36,7 +36,9 @@ func main() {
 	//Business domain
 	var service um.Service
 	{
-		topic := "UserCreate"
+		//Other services might be subscribed to this topic
+		//(i.e. email notification service).
+		topic := "UserCreated"
 
 		pubber, err := kafka.NewKafkaPublisher(
 			*broker,
@@ -51,11 +53,11 @@ func main() {
 		service = um.ServiceLoggingMiddleware(logger)(service)
 	}
 
-	//subscribers
+	//subscribers for our service
 	var subbers um.Subscribers
 	{
-		topic := "UserCreate"
-
+		//here, we're only subscribed to ourself
+		topic := "UserCreated"
 		createUserSubber, err := kafka.NewSubscriber(
 			*broker,
 			topic,
